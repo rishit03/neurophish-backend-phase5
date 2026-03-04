@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- THEME VARIABLES --- */
+:root {
+  /* Light theme */
+  --grid: 15 23 42;
+  --bg-900: 246 248 251;   /* page background */
+  --bg-800: 255 255 255;   /* surfaces */
+  --txt-100: 17 24 39;     /* text */
+  --txt-300: 75 85 99;
+  --border: 15 23 42 / 0.12;
+  --glass: 255 255 255 / 0.7;
+  --accent-1: 99 102 241;  /* indigo */
+  --accent-2: 236 72 153;  /* pink */
+}
+
+.dark {
+  --grid: 255 255 255;
+  --bg-900: 10 12 16;
+  --bg-800: 19 22 30;
+  --txt-100: 226 232 240;
+  --txt-300: 148 163 184;
+  --border: 255 255 255 / 0.12;
+  --glass: 255 255 255 / 0.06;
+  --accent-1: 99 102 241;  /* keep accents for consistency */
+  --accent-2: 236 72 153;
+}
+
+/* --- BASE --- */
+html, body {
+  background-color: rgb(var(--bg-900));
+  color: rgb(var(--txt-100));
+}
+
+/* Swift, global transition on theme toggle */
+.theme-transition * {
+  transition:
+    background-color .25s ease,
+    color .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease,
+    fill .25s ease,
+    stroke .25s ease !important;
+}
+
+/* Components using variables */
+.card {
+  background-color: color-mix(in oklab, rgb(var(--bg-800)), rgba(var(--glass)) 20%);
+  @apply backdrop-blur-xl rounded-2xl p-5 shadow-[0_8px_30px_rgba(0,0,0,.12)];
+  border: 1px solid rgba(var(--border));
+}
+.btn  { @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl font-medium; background: rgb(var(--accent-1)); color: white; }
+.btn:hover { filter: brightness(1.06); }
+.btn-ghost { @apply inline-flex items-center gap-2 px-3 py-2 rounded-xl; background: rgba(var(--glass)); border: 1px solid rgba(var(--border)); }
+.input { @apply rounded-xl px-3 py-2 outline-none; background: rgba(var(--glass)); border: 1px solid rgba(var(--border)); }
+.chip  { @apply inline-flex items-center px-3 py-1 rounded-full; background: rgba(var(--glass)); border: 1px solid rgba(var(--border)); }
+.mono  { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+/* src/styles.css — add below your variables block */
+.text-primary { color: rgb(var(--txt-100)); }
+.text-muted   { color: rgb(var(--txt-300)); }
+.bg-surface   { background-color: color-mix(in oklab, rgb(var(--bg-800)), rgba(var(--glass)) 20%); }
+.border-subtle{ border-color: rgba(var(--border)); }
+
+/* Glass cards + soft shadow */
+.card { @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.12)]; }
+
+/* Primary button */
+.btn  { @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:scale-95 transition font-medium; }
+
+/* Ghost button */
+.btn-ghost { @apply inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition; }
+
+/* Input */
+.input{ @apply bg-white/5 border border-white/10 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-400/40; }
+
+/* Chips */
+.chip { @apply inline-flex items-center px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition; }
+
+/* Grid helper */
+.grid-gap { @apply grid gap-5; }
+
+/* Shimmer skeleton */
+.skeleton {
+  @apply relative overflow-hidden bg-white/10 rounded-lg;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+  animation: shimmer 1.3s infinite;
+}
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+/* vertical rhythm helper */
+.stack { @apply space-y-6 md:space-y-8; }     /* gap between sections */
+.section { @apply space-y-3; }                /* internal spacing within a section */
+.section-title { @apply text-sm uppercase tracking-wide text-muted; }
